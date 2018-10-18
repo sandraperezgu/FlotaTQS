@@ -13,7 +13,18 @@ public class Juego {
     
 	// Método que devuelve si la posición introducida por el jugador es correcta
     public boolean comprobarPosicionCursor(String posicion) {
-    	return false;
+   	
+    	boolean valido = false;
+    	if(posicion.length()==2) {
+    		char fila = posicion.charAt(0);
+        	int columna = Character.getNumericValue(posicion.charAt(1));
+        	
+    		if((columna>=1 && columna<=8) && (fila>='A' && fila<='H')) {
+    			valido =  true;
+    		}
+    		
+    	}
+    	return valido;
     }
     
 }
