@@ -130,7 +130,7 @@ class JuegoTest {
 		// Horizontal- izquierda. primera columnna sobresaliendo 1
 		valido = juego.comprobarLimitesTablero(4, 'A', 2, 3);
 		assertFalse(valido);
-		// Horizontal- derecha. primera columnna sin sobresalir
+		// Horizontal- izquierda. primera columnna sin sobresalir
 		valido = juego.comprobarLimitesTablero(4, 'C', 3, 3);
 		assertTrue(valido);
 		
@@ -196,7 +196,7 @@ class JuegoTest {
 		// Horizontal- izquierda. primera columnna sobresaliendo 1
 		valido = juego.comprobarLimitesTablero(4, 'G', 4, 5);
 		assertFalse(valido);
-		// Horizontal- derecha. primera columnna sin sobresalir
+		// Horizontal- izquierda. primera columnna sin sobresalir
 		valido = juego.comprobarLimitesTablero(4, 'C', 5, 5);
 		assertTrue(valido);
 
