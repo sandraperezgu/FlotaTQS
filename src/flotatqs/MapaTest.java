@@ -22,5 +22,17 @@ class MapaTest {
 		assertEquals(posicion, 7);
 
 	}
+	
+	@Test
+	void testGenerarMapaVacio() {
+		Mapa mapa = new Mapa();
+		
+		Casilla[][] tablero = mapa.generarMapaVacio();
+		
+		for(int i=0; i<tablero.length; i++) {
+			for(int j=0; j<tablero.length; j++)
+				assertFalse(tablero[i][j].isBarco());
+		}
+	}
 
 }
