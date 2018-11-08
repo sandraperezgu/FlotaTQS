@@ -12,11 +12,14 @@ package flotatqs;
 public class Mapa {
 
 	private static final int DIMENSION = 8;
-	private Casilla[][] tablero = new Casilla[DIMENSION][DIMENSION];
+	private Casilla[][] mapa = new Casilla[DIMENSION][DIMENSION];
+	private Tablero tablero;
 	
 	public Mapa() {
-		generarMapaVacio();
+		this.tablero = new Tablero();
+		this.mapa = generarMapaVacio();
 	}
+	
 	// Método que convierte la columna que le llega por parámetro 
 	// al número de columna correspondiente (0-7)
 	public int caracterAnumerico(char columna) {
@@ -28,17 +31,19 @@ public class Mapa {
 		return posicion;
 	}
 	
-	public void generarMapaVacio() {
-		
-		for (int i = 0; i < DIMENSION; i++) {
-			for (int j = 0; j < DIMENSION; j++) {
-				Casilla c = new Casilla(i, j);
-				this.tablero[i][j] = c;
-			}
-		}
+	public Casilla[][] generarMapaVacio() {
+		return this.tablero.generarMapa();
 	}
 	
 	public Casilla[][] getTablero() {
-		return this.tablero;
+		return this.mapa;
+	}
+	public boolean anadirBarco(Barco barco, char fila, int columna, int direccion) {
+		return false;
+	}
+
+	public void setTablero(Tablero tab) {
+		this.tablero = tab;
+		this.mapa = generarMapaVacio();
 	}
 }

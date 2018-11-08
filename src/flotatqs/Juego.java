@@ -90,7 +90,7 @@ public class Juego {
 	}
 
 	// Método que controlará la colocación de los barcos
-	public void colocarBarcos(Jugador jugador1) {
+	public void colocarBarcos(Jugador jugador) {
 		String posicion;
 		
 		// Para cada barco
@@ -98,7 +98,8 @@ public class Juego {
 			boolean barcoCorrecto = false;
 			do {
 				// Longitud del barco i de la lista de barcos del jugador
-				int longitudBarco = listaBarcosJugador.get(i).getLongitud();
+				Barco barco = listaBarcosJugador.get(i);
+				int longitudBarco = barco.getLongitud();
 				
 				posicion = pedirPosicion(longitudBarco);
 				
@@ -115,12 +116,13 @@ public class Juego {
 						
 						// Comprobar que la dirección elegida para situar el barco no se salga del tablero.
 						if(comprobarLimitesTablero(direccion, fila, columna, longitudBarco)) {
-							// Hay que comprobar más cosas antes de colocar el barco
-							barcoCorrecto = true;
+							barcoCorrecto = jugador.colocarBarco(barco, fila, columna, direccion);
+						}else {
+							System.out.println("Imposible colocar el barco en esa dirección puesto que se sale del tablero.");
 						}
 						
 					}else { // Si es una lancha simplemente habrá que comprobar si en esa posicion hay un barco
-						
+						barcoCorrecto = jugador.colocarBarco(barco, fila, columna, 0); // direccion = 0 --> valor por defecto si es una lancha
 					}
 					
 				}else {

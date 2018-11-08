@@ -37,4 +37,27 @@ class MapaTest {
 		}
 	}
 
+	@Test
+	void testAnadirBarco() {
+		
+		Mapa mapa = new Mapa();
+		MockTablero tablero = new MockTablero();
+		mapa.setTablero(tablero);
+		
+		boolean barcoColocado = mapa.anadirBarco(new Barco(1), 'G', 2, 0);
+		assertFalse(barcoColocado);
+		barcoColocado = mapa.anadirBarco(new Barco(1), 'F', 4, 0);
+		assertFalse(barcoColocado);
+		barcoColocado = mapa.anadirBarco(new Barco(1), 'C', 3, 0);
+		assertFalse(barcoColocado);
+		barcoColocado = mapa.anadirBarco(new Barco(1), 'D', 6, 0);
+		assertFalse(barcoColocado);
+		
+		barcoColocado = mapa.anadirBarco(new Barco(1), 'D', 2, 0);
+		assertTrue(barcoColocado);
+		barcoColocado = mapa.anadirBarco(new Barco(1), 'A', 1, 0);
+		assertTrue(barcoColocado);
+		barcoColocado = mapa.anadirBarco(new Barco(1), 'H', 8, 0);
+		assertTrue(barcoColocado);
+	}
 }

@@ -16,4 +16,8 @@ public class Jugador {
     public Jugador(Mapa mapa) {
     	this.mapa = mapa;
     }
+
+	public boolean colocarBarco(Barco barco, char fila, int columna, int direccion) {
+		return this.mapa.anadirBarco(barco, fila, columna, direccion);
+	}
 }

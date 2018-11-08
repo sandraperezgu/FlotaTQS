@@ -14,4 +14,8 @@ public class Casilla {
 	public boolean isBarco() {
 		return this.barco;
 	}
+	
+	public void setBarco(boolean barco) {
+		this.barco = barco;
+	}
 }
