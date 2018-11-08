@@ -200,6 +200,23 @@ class JuegoTest {
 		valido = juego.comprobarLimitesTablero(4, 'C', 5, 5);
 		assertTrue(valido);
 
+		// POR MEDIO DEL TABLERO
+		valido = juego.comprobarLimitesTablero(2, 'B', 7, 3);
+		assertTrue(valido);
+		valido = juego.comprobarLimitesTablero(1, 'G', 7, 3);
+		assertTrue(valido);
+		valido = juego.comprobarLimitesTablero(3, 'C', 2, 3);
+		assertTrue(valido);
+		valido = juego.comprobarLimitesTablero(4, 'E', 7, 3);
+		assertTrue(valido);
+		valido = juego.comprobarLimitesTablero(1, 'F', 7, 5);
+		assertTrue(valido);
+		valido = juego.comprobarLimitesTablero(2, 'B', 7, 5);
+		assertTrue(valido);
+		valido = juego.comprobarLimitesTablero(3, 'G', 3, 5);
+		assertTrue(valido);
+		valido = juego.comprobarLimitesTablero(4, 'F', 6, 5);
+		assertTrue(valido);
 		// CUALQUIER OTRO
 		valido = juego.comprobarLimitesTablero(5, 'C', 5, 5);
 		assertFalse(valido);
