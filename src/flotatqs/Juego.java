@@ -132,7 +132,38 @@ public class Juego {
 	}
 
 	public boolean comprobarLimitesTablero(int direccion, char fila, int columna, int longitudBarco) {
-		return false;
+		boolean valido = false;
+		
+		switch (direccion) {
+			case 1:
+				if ((longitudBarco == 3 && fila >= 'C') || (longitudBarco == 5 && fila >= 'E')) {
+					valido = true;
+				}
+				System.out.println("Has elegido Vertical hacia arriba");
+				break;
+			case 2:
+				if ((longitudBarco == 3 && fila <= 'F') || (longitudBarco == 5 && fila <= 'D')) {
+					valido = true;
+				}
+				System.out.println("Has elegido Vertical hacia abajo");
+				break;
+			case 3:
+				if ((longitudBarco == 3 && columna < 6) || (longitudBarco == 5 && columna < 4)) {
+					valido = true;
+				}
+				System.out.println("Horizontal - derecha");
+				break;
+			case 4:
+				if ((longitudBarco == 3 && columna >= 3) || (longitudBarco == 5 && columna >= 5)) {
+					valido = true;
+				}
+				System.out.println("Horizontal - izq");
+				break;
+			default:
+				System.out.println("Dirección errónea.");
+		}
+
+		return valido;
 	}
     
 }
