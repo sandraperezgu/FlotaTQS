@@ -34,11 +34,11 @@ public class Juego {
     }
     
     public String pedirPosicion(int longitud) {
-    	return "";
+    	return this.teclado.leerPosicion(longitud);
     }
     
     public int pedirDireccion() {
-    	return 0;
+    	return this.teclado.leerDireccion();
     }
     
 }
