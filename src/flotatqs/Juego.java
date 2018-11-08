@@ -11,6 +11,12 @@ package flotatqs;
  */
 public class Juego {
     
+	private Teclado teclado;
+	
+	public void setTeclado(Teclado tec) {
+        this.teclado = tec;
+    }
+	
 	// Método que devuelve si la posición introducida por el jugador es correcta
     public boolean comprobarPosicionCursor(String posicion) {
    	
@@ -25,6 +31,14 @@ public class Juego {
     		
     	}
     	return valido;
+    }
+    
+    public String pedirPosicion(int longitud) {
+    	return "";
+    }
+    
+    public int pedirDireccion() {
+    	return 0;
     }
     
 }

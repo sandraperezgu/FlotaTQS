@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class JuegoTest {
 
 	@Test
-	void testObtenerPosicionCursor() {
+	void testComprobarPosicionCursor() {
 		Juego juego = new Juego();
 
 		boolean posicion = juego.comprobarPosicionCursor("A1");
@@ -39,17 +39,47 @@ class JuegoTest {
 		posicion = juego.comprobarPosicionCursor("H1");
 		assertTrue(posicion);
 		posicion = juego.comprobarPosicionCursor("I1");
-		assertTrue(posicion);
+		assertFalse(posicion);
 		posicion = juego.comprobarPosicionCursor("Z1");
 		assertFalse(posicion);
 		
 		posicion = juego.comprobarPosicionCursor("1A");
 		assertFalse(posicion);
 	
-
-
-		
-		 
 	}
+	
+	@Test
+	void testPedirPosicion() {
+		// Recoge el String que introduce el usuario, independientemente de que sea correcto o no
+		Juego juego = new Juego();
+		MockTeclado teclado = new MockTeclado();
+		juego.setTeclado(teclado);
+		
+		String posicion = juego.pedirPosicion(5);
+		assertEquals(posicion, "A1");
+		posicion = juego.pedirPosicion(3);
+		assertEquals(posicion, "B2");
+		posicion = juego.pedirPosicion(1);
+		assertEquals(posicion, "H1");
+		posicion = juego.pedirPosicion(5);
+		assertEquals(posicion, "Z1");
+	}
+	
+	@Test
+	void testPedirDireccion() {
+		// Recoge el numero que introduce el usuario, independientemente de que sea correcto o no
+		Juego juego = new Juego();
+		MockTeclado teclado = new MockTeclado();
+		juego.setTeclado(teclado);
+		
+		int direccion = juego.pedirDireccion();
+		assertEquals(direccion, 2);
+		direccion = juego.pedirDireccion();
+		assertEquals(direccion, 2);
+		direccion = juego.pedirDireccion();
+		assertEquals(direccion, 0);
+		direccion = juego.pedirDireccion();
+		assertEquals(direccion, 2);
 
+	}
 }
