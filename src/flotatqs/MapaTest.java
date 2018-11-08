@@ -27,7 +27,9 @@ class MapaTest {
 	void testGenerarMapaVacio() {
 		Mapa mapa = new Mapa();
 		
-		Casilla[][] tablero = mapa.generarMapaVacio();
+		mapa.generarMapaVacio();
+		// Obtengo el tablero creado para comprobar si no hay ningun barco en el mapa
+		Casilla[][] tablero = mapa.getTablero();
 		
 		for(int i=0; i<tablero.length; i++) {
 			for(int j=0; j<tablero.length; j++)
