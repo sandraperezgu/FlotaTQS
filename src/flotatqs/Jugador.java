@@ -10,5 +10,10 @@ package flotatqs;
  * @author Sandra
  */
 public class Jugador {
-    
+	
+	private Mapa mapa;
+	
+    public Jugador(Mapa mapa) {
+    	this.mapa = mapa;
+    }
 }

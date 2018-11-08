@@ -10,5 +10,14 @@ package flotatqs;
  * @author Sandra
  */
 public class Barco {
-    
+	private int longitud;
+	private boolean hundido;
+	
+    public Barco(int longitud) {
+    	this.longitud = longitud;
+    }
+
+	public int getLongitud() {
+		return this.longitud;
+	}
 }

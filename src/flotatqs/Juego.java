@@ -5,6 +5,8 @@
  */
 package flotatqs;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Sandra
@@ -12,7 +14,39 @@ package flotatqs;
 public class Juego {
     
 	private Teclado teclado;
+	private Mapa mapaJugador1;
+	private Mapa mapaJugador2;
+	private ArrayList<Barco> listaBarcosJugador = new ArrayList<Barco>();
+	private static final int LONGITUD_PORTAVIONES = 5;
+	private static final int LONGITUD_BUQUES = 3;
+	private static final int LONGITUD_LANCHAS = 1;
 	
+	public Juego() {
+		this.teclado = new Teclado(); 
+		this.mapaJugador1 = new Mapa();
+		this.mapaJugador2 = new Mapa();
+		
+		generarListaBarcosJugador();
+	}
+	
+	public void generarListaBarcosJugador() {
+		// 10 barcos en total
+		for (int i = 0; i < 5; i++) {
+			// portaaviones
+			if (i < 2) {
+				this.listaBarcosJugador.add(new Barco(LONGITUD_PORTAVIONES));
+			}
+			// buques
+			if (i < 3) {
+				this.listaBarcosJugador.add(new Barco(LONGITUD_BUQUES));
+			}
+			// lanchas
+			if (i < 5) {
+				this.listaBarcosJugador.add(new Barco(LONGITUD_LANCHAS));
+			}
+		}
+	}
+
 	public void setTeclado(Teclado tec) {
         this.teclado = tec;
     }
@@ -40,5 +74,65 @@ public class Juego {
     public int pedirDireccion() {
     	return this.teclado.leerDireccion();
     }
+
+	public void iniciarJuego() {
+		System.out.println("Hundir la flota");
+		System.out.println("---------------");
+		
+		inicializarMapas();
+		
+	}
+
+	// Método donde cada jugador colocará sus 10 barcos en su respectivo tablero
+	public void inicializarMapas() {
+		Jugador jugador1 = new Jugador(this.mapaJugador1);
+		colocarBarcos(jugador1);
+	}
+
+	// Método que controlará la colocación de los barcos
+	public void colocarBarcos(Jugador jugador1) {
+		String posicion;
+		
+		// Para cada barco
+		for(int i = 0; i < listaBarcosJugador.size(); i++) {
+			boolean barcoCorrecto = false;
+			do {
+				// Longitud del barco i de la lista de barcos del jugador
+				int longitudBarco = listaBarcosJugador.get(i).getLongitud();
+				
+				posicion = pedirPosicion(longitudBarco);
+				
+				if(comprobarPosicionCursor(posicion)) {
+					// Cogemos el primer caracter del string, que es la fila
+					char fila = posicion.charAt(0);
+					// Cogemos el segundo caracter del string, que es la columna, pasándolo a valor numérico
+					int columna = Character.getNumericValue(posicion.charAt(1));
+					
+					// Si no es una lancha, pedimos la dirección en la que quiere colocar este barco
+					if(longitudBarco!=LONGITUD_LANCHAS) {
+						
+						int direccion = pedirDireccion();
+						
+						// Comprobar que la dirección elegida para situar el barco no se salga del tablero.
+						if(comprobarLimitesTablero(direccion, fila, columna, longitudBarco)) {
+							// Hay que comprobar más cosas antes de colocar el barco
+							barcoCorrecto = true;
+						}
+						
+					}else { // Si es una lancha simplemente habrá que comprobar si en esa posicion hay un barco
+						
+					}
+					
+				}else {
+					System.out.println("La posición no es correcta.");
+				}
+			}while(!barcoCorrecto);
+		}
+		
+	}
+
+	public boolean comprobarLimitesTablero(int direccion, char fila, int columna, int longitudBarco) {
+		return false;
+	}
     
 }
