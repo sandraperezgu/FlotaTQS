@@ -48,7 +48,7 @@ public class Mapa {
 		case 0:
 			c = this.mapa[numeroFila][columna-1];
 			 
-			if(!c.isBarco()) {
+			if(!c.isBarco() && !barcosAlrededor(barco, fila, columna, direccion)) {
 				c.setBarco(true);
 				barcoColocado = true;
 			}else {
@@ -58,6 +58,23 @@ public class Mapa {
 		}
 		
 		return barcoColocado;
+	}
+
+	public boolean barcosAlrededor(Barco barco, char fila, int columna, int direccion) {
+		int numeroFila = caracterAnumerico(fila);
+		Casilla c;
+		boolean barcoColocado = false;
+		
+		switch(direccion) {
+		// Si es una lancha no necesita saber una direccion
+		case 0:
+			if(!this.mapa[numeroFila+1][columna-1].isBarco() || !this.mapa[numeroFila][(columna-1)-1].isBarco() || !this.mapa[numeroFila-1][columna-1].isBarco() || !this.mapa[numeroFila][columna].isBarco()) {
+				barcoColocado = true;
+			}
+			
+			break;
+		}
+		return false;
 	}
 
 	public void setTablero(Tablero tab) {
