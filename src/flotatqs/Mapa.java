@@ -39,7 +39,25 @@ public class Mapa {
 		return this.mapa;
 	}
 	public boolean anadirBarco(Barco barco, char fila, int columna, int direccion) {
-		return false;
+		
+		int numeroFila = caracterAnumerico(fila);
+		Casilla c;
+		boolean barcoColocado = false;
+		switch(direccion) {
+		// Si es una lancha no necesita saber una direccion
+		case 0:
+			c = this.mapa[numeroFila][columna-1];
+			 
+			if(!c.isBarco()) {
+				c.setBarco(true);
+				barcoColocado = true;
+			}else {
+				System.out.println("Ya hay un barco en esta posición. ");
+			}
+			break;
+		}
+		
+		return barcoColocado;
 	}
 
 	public void setTablero(Tablero tab) {
