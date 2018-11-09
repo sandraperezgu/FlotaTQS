@@ -71,20 +71,20 @@ class MapaTest {
 		mapa.setTablero(tablero);
 		
 		// LANCHAS
-		boolean barcoColocado = mapa.anadirBarco(new Barco(1), 'C', 2, 0);
+		boolean barcoColocado = mapa.barcosAlrededor(new Barco(1), 'C', 2, 0);
 		assertFalse(barcoColocado);
-		barcoColocado = mapa.anadirBarco(new Barco(1), 'D', 7, 0);
+		barcoColocado = mapa.barcosAlrededor(new Barco(1), 'D', 7, 0);
 		assertFalse(barcoColocado);
-		barcoColocado = mapa.anadirBarco(new Barco(1), 'E', 4, 0);
+		barcoColocado = mapa.barcosAlrededor(new Barco(1), 'E', 4, 0);
 		assertFalse(barcoColocado);	
-		barcoColocado = mapa.anadirBarco(new Barco(1), 'H', 2, 0);
+		barcoColocado = mapa.barcosAlrededor(new Barco(1), 'H', 2, 0);
 		assertFalse(barcoColocado);
 		
-		barcoColocado = mapa.anadirBarco(new Barco(1), 'B', 5, 0);
+		barcoColocado = mapa.barcosAlrededor(new Barco(1), 'B', 5, 0);
 		assertTrue(barcoColocado);
-		barcoColocado = mapa.anadirBarco(new Barco(1), 'A', 1, 0);
+		barcoColocado = mapa.barcosAlrededor(new Barco(1), 'A', 1, 0);
 		assertTrue(barcoColocado);
-		barcoColocado = mapa.anadirBarco(new Barco(1), 'H', 8, 0);
+		barcoColocado = mapa.barcosAlrededor(new Barco(1), 'H', 8, 0);
 		assertTrue(barcoColocado);
 	}
 }
