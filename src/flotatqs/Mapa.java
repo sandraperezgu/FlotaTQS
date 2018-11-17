@@ -55,7 +55,11 @@ public class Mapa {
 				System.out.println("Ya hay un barco en esta posición. ");
 			}
 			break;
-		
+		case 1:
+			//Vertical hacia arriba
+			if(barcosAlrededor(barco, fila, columna, direccion)) {
+				
+			}
 		}
 		
 		return barcoColocado;
@@ -74,43 +78,38 @@ public class Mapa {
 					colocarBarco = true;
 				}
 			}else{
+				colocarBarco = comprobarLimiteTablero(numeroFila, columna);
 				
-				if(numeroFila==0 && (columna-1)==0) { // esquina superior izquierda
-					if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
-						colocarBarco = true;
-					}
-				}else if(numeroFila==7 && (columna-1)==0) { // esquina inferior izquierda
-					if(!this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
-						colocarBarco = true;
-					}
-				}else if(numeroFila==0 && (columna-1)==7) { // esquina superior derecha
-					if(!this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila+1][(columna-1)].isBarco()) {
-						colocarBarco = true;
-					}
-				}else if(numeroFila==7 && (columna-1)==7) { // esquina inferior derecha
-					if(!this.mapa[numeroFila-1][(columna-1)].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco()) {
-						colocarBarco = true;
-					}
-				}else if(numeroFila==0) { // fila 0 (no esquinas)
-					if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
-						colocarBarco = true;
-					}
-				}else if(numeroFila==7) { // fila 7 (no esquinas)
-					if(!this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
-						colocarBarco = true;
-					}
-				}else if((columna-1)==0) { // columna 0 (no esquinas)
-					if(!this.mapa[numeroFila+1][columna-1].isBarco()  && !this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
-						colocarBarco = true;
-					}
-				}else if((columna-1)==7) { // columna 7 (no esquinas)
-					if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila-1][columna-1].isBarco()) {
-						colocarBarco = true;
-					}
-				}
 			}
-			
-			
+			break;
+		case 1: // Vertical hacia arriba
+			colocarBarco = true;
+            int j = 0;
+            while (j < barco.getLongitud() && colocarBarco) {
+
+            	if(numeroFila>0 && numeroFila<7 && (columna-1)>0 && (columna-1)<7) {
+					if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
+						colocarBarco = true;
+					}else {
+						colocarBarco = false;
+					}
+				}else {
+					colocarBarco = comprobarLimiteTablero(numeroFila, columna);
+				}
+				numeroFila = numeroFila-1;
+                j++;
+            }
+			/*for(int i = 0; i<barco.getLongitud(); i++) {
+				if(numeroFila>0 && numeroFila<7 && (columna-1)>0 && (columna-1)<7) {
+					if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
+						colocarBarco = true;
+					}
+				}else {
+					colocarBarco = comprobarLimiteTablero(numeroFila, columna);
+				}
+				numeroFila = numeroFila-1;
+			}*/
+				
 			break;
 		}
 		return colocarBarco;
@@ -120,4 +119,45 @@ public class Mapa {
 		this.tablero = tab;
 		this.mapa = generarMapaVacio();
 	}
+	
+	public boolean comprobarLimiteTablero(int numeroFila, int columna) {
+		boolean colocarBarco = false;
+		if(numeroFila==0 && (columna-1)==0) { // esquina superior izquierda
+			if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
+				colocarBarco = true;
+			}
+		}else if(numeroFila==7 && (columna-1)==0) { // esquina inferior izquierda
+			if(!this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
+				colocarBarco = true;
+			}
+		}else if(numeroFila==0 && (columna-1)==7) { // esquina superior derecha
+			if(!this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila+1][(columna-1)].isBarco()) {
+				colocarBarco = true;
+			}
+		}else if(numeroFila==7 && (columna-1)==7) { // esquina inferior derecha
+			if(!this.mapa[numeroFila-1][(columna-1)].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco()) {
+				colocarBarco = true;
+			}
+		}else if(numeroFila==0) { // fila 0 (no esquinas)
+			if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
+				colocarBarco = true;
+			}
+		}else if(numeroFila==7) { // fila 7 (no esquinas)
+			if(!this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
+				colocarBarco = true;
+			}
+		}else if((columna-1)==0) { // columna 0 (no esquinas)
+			if(!this.mapa[numeroFila+1][columna-1].isBarco()  && !this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
+				colocarBarco = true;
+			}
+		}else if((columna-1)==7) { // columna 7 (no esquinas)
+			if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila-1][columna-1].isBarco()) {
+				colocarBarco = true;
+			}
+		}
+		
+		return colocarBarco;
+	}
+	
+	
 }
