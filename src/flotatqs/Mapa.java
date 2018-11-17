@@ -41,12 +41,12 @@ public class Mapa {
 	public boolean anadirBarco(Barco barco, char fila, int columna, int direccion) {
 		
 		int numeroFila = caracterAnumerico(fila);
-		Casilla c;
+		Casilla c = this.mapa[numeroFila][columna-1];
 		boolean barcoColocado = false;
 		switch(direccion) {
 		// Si es una lancha no necesita saber una direccion
 		case 0:
-			c = this.mapa[numeroFila][columna-1];
+			//c = this.mapa[numeroFila][columna-1];
 			 
 			if(!c.isBarco() && barcosAlrededor(barco, fila, columna, direccion)) {
 				c.setBarco(true);
@@ -56,26 +56,53 @@ public class Mapa {
 			}
 			break;
 		case 1:
-			//Vertical hacia arriba
+			
+			
 			if(barcosAlrededor(barco, fila, columna, direccion)) {
+				
+				for (int i=0; i < barco.getLongitud(); i++) {
+					c = this.mapa[numeroFila][columna-1];
+                    c.setBarco(true);
+					numeroFila = numeroFila+1;
+	            }
+				barcoColocado = true;
+				
 				
 			}
 			break;
 		case 2:
-			//Vertical hacia abajo
+			
 			if(barcosAlrededor(barco, fila, columna, direccion)) {
+				for (int i=0; i < barco.getLongitud(); i++) {
+					c = this.mapa[numeroFila][columna-1];
+                    c.setBarco(true);
+					numeroFila = numeroFila-1;
+	            }
+				barcoColocado = true;
 				
 			}
 			break;
 		case 3:
-			//Vertical hacia abajo
+			
 			if(barcosAlrededor(barco, fila, columna, direccion)) {
+				for (int i=0; i < barco.getLongitud(); i++) {
+					c = this.mapa[numeroFila][columna-1];
+                    c.setBarco(true);
+					columna = columna-1;
+	            }
+				
 				
 			}
 			break;
 		case 4:
-			//Vertical hacia abajo
+			
 			if(barcosAlrededor(barco, fila, columna, direccion)) {
+				for (int i=0; i < barco.getLongitud(); i++) {
+					c = this.mapa[numeroFila][columna-1];
+                    c.setBarco(true);
+					columna = columna+1;
+	            }
+				barcoColocado = true;
 				
 			}
 			break;
@@ -83,7 +110,7 @@ public class Mapa {
 		
 		return barcoColocado;
 	}
-
+	
 	public boolean barcosAlrededor(Barco barco, char fila, int columna, int direccion) {
 		int numeroFila = caracterAnumerico(fila);
 		Casilla c;
@@ -104,16 +131,7 @@ public class Mapa {
 			colocarBarco = true;
             int j = 0;
             while (j < barco.getLongitud() && colocarBarco) {
-
-            	if(numeroFila>0 && numeroFila<7 && (columna-1)>0 && (columna-1)<7) {
-					if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
-						colocarBarco = true;
-					}else {
-						colocarBarco = false;
-					}
-				}else {
-					colocarBarco = comprobarLimiteTablero(numeroFila, columna);
-				}
+            	colocarBarco = comprobarPosicionParaAnadir(numeroFila, columna);
 				numeroFila = numeroFila-1;
                 j++;
             }
@@ -124,16 +142,7 @@ public class Mapa {
 			colocarBarco = true;
             j = 0;
             while (j < barco.getLongitud() && colocarBarco) {
-
-            	if(numeroFila>0 && numeroFila<7 && (columna-1)>0 && (columna-1)<7) {
-					if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
-						colocarBarco = true;
-					}else {
-						colocarBarco = false;
-					}
-				}else {
-					colocarBarco = comprobarLimiteTablero(numeroFila, columna);
-				}
+            	colocarBarco = comprobarPosicionParaAnadir(numeroFila, columna);
 				numeroFila = numeroFila+1;
                 j++;
             }
@@ -143,16 +152,7 @@ public class Mapa {
 			colocarBarco = true;
             j = 0;
             while (j < barco.getLongitud() && colocarBarco) {
-
-            	if(numeroFila>0 && numeroFila<7 && (columna-1)>0 && (columna-1)<7) {
-					if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
-						colocarBarco = true;
-					}else {
-						colocarBarco = false;
-					}
-				}else {
-					colocarBarco = comprobarLimiteTablero(numeroFila, columna);
-				}
+            	colocarBarco = comprobarPosicionParaAnadir(numeroFila, columna);
 				columna = columna+1;
                 j++;
             }
@@ -161,16 +161,7 @@ public class Mapa {
 			colocarBarco = true;
             j = 0;
             while (j < barco.getLongitud() && colocarBarco) {
-
-            	if(numeroFila>0 && numeroFila<7 && (columna-1)>0 && (columna-1)<7) {
-					if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
-						colocarBarco = true;
-					}else {
-						colocarBarco = false;
-					}
-				}else {
-					colocarBarco = comprobarLimiteTablero(numeroFila, columna);
-				}
+            	colocarBarco = comprobarPosicionParaAnadir(numeroFila, columna);
 				columna = columna-1;
                 j++;
             }
@@ -223,5 +214,18 @@ public class Mapa {
 		return colocarBarco;
 	}
 	
-	
+	public boolean comprobarPosicionParaAnadir(int numeroFila, int columna) {
+		boolean colocarBarco = true;
+		if(numeroFila>0 && numeroFila<7 && (columna-1)>0 && (columna-1)<7) {
+			if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
+				colocarBarco = true;
+			}else {
+				colocarBarco = false;
+			}
+		}else {
+			colocarBarco = comprobarLimiteTablero(numeroFila, columna);
+		}
+		return colocarBarco;
+	}
+		
 }
