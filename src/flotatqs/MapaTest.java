@@ -62,7 +62,23 @@ class MapaTest {
 		assertTrue(barcoColocado);
 		
 		// BUQUES Y PORTAVIONES
-		barcoColocado = mapa.anadirBarco(new Barco(1), 'G', 2, 0);
+		barcoColocado = mapa.anadirBarco(new Barco(3), 'G', 2, 1);
+		assertFalse(barcoColocado);
+		barcoColocado = mapa.anadirBarco(new Barco(5), 'B', 5, 2);
+		assertFalse(barcoColocado);
+		barcoColocado = mapa.anadirBarco(new Barco(3), 'F', 1, 3);
+		assertFalse(barcoColocado);
+		barcoColocado = mapa.anadirBarco(new Barco(5), 'C', 8, 4);
+		assertFalse(barcoColocado);
+		
+		barcoColocado = mapa.anadirBarco(new Barco(3), 'C', 4, 1);
+		assertTrue(barcoColocado);
+		barcoColocado = mapa.anadirBarco(new Barco(3), 'F', 6, 2);
+		assertTrue(barcoColocado);
+		barcoColocado = mapa.anadirBarco(new Barco(3), 'G', 5, 3);
+		assertTrue(barcoColocado);
+		barcoColocado = mapa.anadirBarco(new Barco(5), 'A', 7, 4);
+		assertTrue(barcoColocado);
 	}
 	
 	@Test

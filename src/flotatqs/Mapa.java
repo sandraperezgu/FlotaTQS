@@ -60,6 +60,25 @@ public class Mapa {
 			if(barcosAlrededor(barco, fila, columna, direccion)) {
 				
 			}
+			break;
+		case 2:
+			//Vertical hacia abajo
+			if(barcosAlrededor(barco, fila, columna, direccion)) {
+				
+			}
+			break;
+		case 3:
+			//Vertical hacia abajo
+			if(barcosAlrededor(barco, fila, columna, direccion)) {
+				
+			}
+			break;
+		case 4:
+			//Vertical hacia abajo
+			if(barcosAlrededor(barco, fila, columna, direccion)) {
+				
+			}
+			break;
 		}
 		
 		return barcoColocado;
@@ -79,7 +98,6 @@ public class Mapa {
 				}
 			}else{
 				colocarBarco = comprobarLimiteTablero(numeroFila, columna);
-				
 			}
 			break;
 		case 1: // Vertical hacia arriba
@@ -99,18 +117,64 @@ public class Mapa {
 				numeroFila = numeroFila-1;
                 j++;
             }
-			/*for(int i = 0; i<barco.getLongitud(); i++) {
-				if(numeroFila>0 && numeroFila<7 && (columna-1)>0 && (columna-1)<7) {
+			
+			break;
+		case 2:
+			// Vertical hacia abajo
+			colocarBarco = true;
+            j = 0;
+            while (j < barco.getLongitud() && colocarBarco) {
+
+            	if(numeroFila>0 && numeroFila<7 && (columna-1)>0 && (columna-1)<7) {
 					if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
 						colocarBarco = true;
+					}else {
+						colocarBarco = false;
 					}
 				}else {
 					colocarBarco = comprobarLimiteTablero(numeroFila, columna);
 				}
-				numeroFila = numeroFila-1;
-			}*/
-				
+				numeroFila = numeroFila+1;
+                j++;
+            }
 			break;
+		case 3:
+			// Horizontal hacia la derecha
+			colocarBarco = true;
+            j = 0;
+            while (j < barco.getLongitud() && colocarBarco) {
+
+            	if(numeroFila>0 && numeroFila<7 && (columna-1)>0 && (columna-1)<7) {
+					if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
+						colocarBarco = true;
+					}else {
+						colocarBarco = false;
+					}
+				}else {
+					colocarBarco = comprobarLimiteTablero(numeroFila, columna);
+				}
+				columna = columna+1;
+                j++;
+            }
+            break;
+		case 4:
+			colocarBarco = true;
+            j = 0;
+            while (j < barco.getLongitud() && colocarBarco) {
+
+            	if(numeroFila>0 && numeroFila<7 && (columna-1)>0 && (columna-1)<7) {
+					if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
+						colocarBarco = true;
+					}else {
+						colocarBarco = false;
+					}
+				}else {
+					colocarBarco = comprobarLimiteTablero(numeroFila, columna);
+				}
+				columna = columna-1;
+                j++;
+            }
+            break;
 		}
 		return colocarBarco;
 	}
