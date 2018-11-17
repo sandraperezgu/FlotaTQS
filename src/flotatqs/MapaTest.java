@@ -51,11 +51,9 @@ class MapaTest {
 		assertFalse(barcoColocado);
 		barcoColocado = mapa.anadirBarco(new Barco(1), 'C', 3, 0);
 		assertFalse(barcoColocado);
-		barcoColocado = mapa.anadirBarco(new Barco(1), 'D', 6, 0);
-		assertFalse(barcoColocado);
 		
-		barcoColocado = mapa.anadirBarco(new Barco(1), 'D', 2, 0);
-		assertTrue(barcoColocado);
+		
+
 		barcoColocado = mapa.anadirBarco(new Barco(1), 'A', 1, 0);
 		assertFalse(barcoColocado);
 		barcoColocado = mapa.anadirBarco(new Barco(1), 'H', 8, 0);
@@ -71,13 +69,15 @@ class MapaTest {
 		barcoColocado = mapa.anadirBarco(new Barco(5), 'C', 8, 4);
 		assertFalse(barcoColocado);
 		
-		barcoColocado = mapa.anadirBarco(new Barco(3), 'C', 4, 1);
+		barcoColocado = mapa.anadirBarco(new Barco(3), 'C', 5, 1);
 		assertTrue(barcoColocado);
 		barcoColocado = mapa.anadirBarco(new Barco(3), 'F', 6, 2);
 		assertTrue(barcoColocado);
-		barcoColocado = mapa.anadirBarco(new Barco(3), 'G', 5, 3);
+		barcoColocado = mapa.anadirBarco(new Barco(3), 'H', 1, 3);
 		assertTrue(barcoColocado);
-		barcoColocado = mapa.anadirBarco(new Barco(5), 'A', 7, 4);
+		barcoColocado = mapa.anadirBarco(new Barco(3), 'D', 4, 4);
+		assertTrue(barcoColocado);
+		barcoColocado = mapa.anadirBarco(new Barco(5), 'A', 8, 2);
 		assertTrue(barcoColocado);
 	}
 	
@@ -89,13 +89,12 @@ class MapaTest {
 		
 		// LANCHAS
 		boolean barcoColocado = mapa.barcosAlrededor(new Barco(1), 'C', 2, 0);
-		assertFalse(barcoColocado);
+		assertTrue(barcoColocado);
 		barcoColocado = mapa.barcosAlrededor(new Barco(1), 'D', 7, 0);
 		assertFalse(barcoColocado);
 		barcoColocado = mapa.barcosAlrededor(new Barco(1), 'E', 4, 0);
 		assertFalse(barcoColocado);	
-		barcoColocado = mapa.barcosAlrededor(new Barco(1), 'H', 2, 0);
-		assertFalse(barcoColocado);
+
 		
 		barcoColocado = mapa.barcosAlrededor(new Barco(1), 'B', 5, 0);
 		assertTrue(barcoColocado);
@@ -126,8 +125,7 @@ class MapaTest {
 		// Horizontal hacia la derecha
 		barcoColocado = mapa.barcosAlrededor(new Barco(3), 'G', 5, 3);
 		assertTrue(barcoColocado);
-		barcoColocado = mapa.barcosAlrededor(new Barco(3), 'H', 1, 3);
-		assertFalse(barcoColocado);
+
 		barcoColocado = mapa.barcosAlrededor(new Barco(3), 'B', 2, 3);
 		assertFalse(barcoColocado);	
 		barcoColocado = mapa.barcosAlrededor(new Barco(3), 'D', 5, 3);
@@ -135,12 +133,11 @@ class MapaTest {
 		// Horizontal hacia la  izquierda
 		barcoColocado = mapa.barcosAlrededor(new Barco(3), 'G', 7, 4);
 		assertTrue(barcoColocado);
-		barcoColocado = mapa.barcosAlrededor(new Barco(3), 'H', 3, 4);
-		assertFalse(barcoColocado);
+
 		barcoColocado = mapa.barcosAlrededor(new Barco(3), 'B', 4, 4);
 		assertFalse(barcoColocado);	
 		barcoColocado = mapa.barcosAlrededor(new Barco(3), 'D', 8, 4);
-		assertFalse(barcoColocado);			
+		assertFalse(barcoColocado);
 		
 	}
 }

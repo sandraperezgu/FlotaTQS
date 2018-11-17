@@ -9,12 +9,12 @@ public class MockTablero extends Tablero{
 	@Override
 	public Casilla[][] generarMapa() {
 		// Añado barcos al mapa
-		Casilla c = new Casilla(6, 1);
-		this.tablero[6][1] = c;
+		Casilla c = new Casilla(5, 1);
+		this.tablero[5][1] = c;
 		c.setBarco(true);
 		
-		c = new Casilla(2, 2);
-		this.tablero[2][2] = c;
+		c = new Casilla(1, 2);
+		this.tablero[1][2] = c;
 		c.setBarco(true);
 		
 		c = new Casilla(5, 3);
@@ -40,6 +40,5 @@ public class MockTablero extends Tablero{
 		}
 		
 		return this.tablero;
-		
 	}
 }
