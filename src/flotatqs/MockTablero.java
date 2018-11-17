@@ -25,6 +25,10 @@ public class MockTablero extends Tablero{
 		this.tablero[3][5] = c;
 		c.setBarco(true);
 		
+		c = new Casilla(0, 0);
+		this.tablero[0][0] = c;
+		c.setBarco(true);
+		
 		// Donde no hay barcos, coloco agua
 		for (int i = 0; i < DIMENSION; i++) {
 			for (int j = 0; j < DIMENSION; j++) {

@@ -57,11 +57,12 @@ class MapaTest {
 		barcoColocado = mapa.anadirBarco(new Barco(1), 'D', 2, 0);
 		assertTrue(barcoColocado);
 		barcoColocado = mapa.anadirBarco(new Barco(1), 'A', 1, 0);
-		assertTrue(barcoColocado);
+		assertFalse(barcoColocado);
 		barcoColocado = mapa.anadirBarco(new Barco(1), 'H', 8, 0);
 		assertTrue(barcoColocado);
 		
-		
+		// BUQUES Y PORTAVIONES
+		barcoColocado = mapa.anadirBarco(new Barco(1), 'G', 2, 0);
 	}
 	
 	@Test
@@ -82,9 +83,20 @@ class MapaTest {
 		
 		barcoColocado = mapa.barcosAlrededor(new Barco(1), 'B', 5, 0);
 		assertTrue(barcoColocado);
+		//Limites tablero
 		barcoColocado = mapa.barcosAlrededor(new Barco(1), 'A', 1, 0);
 		assertTrue(barcoColocado);
 		barcoColocado = mapa.barcosAlrededor(new Barco(1), 'H', 8, 0);
+		assertTrue(barcoColocado);
+		
+		barcoColocado = mapa.barcosAlrededor(new Barco(3), 'E', 7, 1);
+		assertFalse(barcoColocado);
+		barcoColocado = mapa.barcosAlrededor(new Barco(5), 'E', 2, 1);
+		assertFalse(barcoColocado);
+		barcoColocado = mapa.barcosAlrededor(new Barco(3), 'G', 6, 1);
+		assertFalse(barcoColocado);
+		
+		barcoColocado = mapa.barcosAlrededor(new Barco(3), 'C', 8, 1);
 		assertTrue(barcoColocado);
 	}
 }

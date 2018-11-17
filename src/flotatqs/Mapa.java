@@ -48,13 +48,14 @@ public class Mapa {
 		case 0:
 			c = this.mapa[numeroFila][columna-1];
 			 
-			if(!c.isBarco() && !barcosAlrededor(barco, fila, columna, direccion)) {
+			if(!c.isBarco() && barcosAlrededor(barco, fila, columna, direccion)) {
 				c.setBarco(true);
 				barcoColocado = true;
 			}else {
 				System.out.println("Ya hay un barco en esta posición. ");
 			}
 			break;
+		
 		}
 		
 		return barcoColocado;
@@ -63,18 +64,56 @@ public class Mapa {
 	public boolean barcosAlrededor(Barco barco, char fila, int columna, int direccion) {
 		int numeroFila = caracterAnumerico(fila);
 		Casilla c;
-		boolean barcoColocado = false;
+		boolean colocarBarco = false;
 		
 		switch(direccion) {
 		// Si es una lancha no necesita saber una direccion
 		case 0:
-			if(!this.mapa[numeroFila+1][columna-1].isBarco() || !this.mapa[numeroFila][(columna-1)-1].isBarco() || !this.mapa[numeroFila-1][columna-1].isBarco() || !this.mapa[numeroFila][columna].isBarco()) {
-				barcoColocado = true;
+			if(numeroFila>0 && numeroFila<7 && (columna-1)>0 && (columna-1)<7) {
+				if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
+					colocarBarco = true;
+				}
+			}else{
+				
+				if(numeroFila==0 && (columna-1)==0) { // esquina superior izquierda
+					if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
+						colocarBarco = true;
+					}
+				}else if(numeroFila==7 && (columna-1)==0) { // esquina inferior izquierda
+					if(!this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
+						colocarBarco = true;
+					}
+				}else if(numeroFila==0 && (columna-1)==7) { // esquina superior derecha
+					if(!this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila+1][(columna-1)].isBarco()) {
+						colocarBarco = true;
+					}
+				}else if(numeroFila==7 && (columna-1)==7) { // esquina inferior derecha
+					if(!this.mapa[numeroFila-1][(columna-1)].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco()) {
+						colocarBarco = true;
+					}
+				}else if(numeroFila==0) { // fila 0 (no esquinas)
+					if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
+						colocarBarco = true;
+					}
+				}else if(numeroFila==7) { // fila 7 (no esquinas)
+					if(!this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
+						colocarBarco = true;
+					}
+				}else if((columna-1)==0) { // columna 0 (no esquinas)
+					if(!this.mapa[numeroFila+1][columna-1].isBarco()  && !this.mapa[numeroFila-1][columna-1].isBarco() && !this.mapa[numeroFila][columna].isBarco()) {
+						colocarBarco = true;
+					}
+				}else if((columna-1)==7) { // columna 7 (no esquinas)
+					if(!this.mapa[numeroFila+1][columna-1].isBarco() && !this.mapa[numeroFila][(columna-1)-1].isBarco() && !this.mapa[numeroFila-1][columna-1].isBarco()) {
+						colocarBarco = true;
+					}
+				}
 			}
+			
 			
 			break;
 		}
-		return false;
+		return colocarBarco;
 	}
 
 	public void setTablero(Tablero tab) {
