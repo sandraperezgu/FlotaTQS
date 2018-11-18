@@ -13,9 +13,10 @@ import java.util.ArrayList;
  */
 public class Juego {
     
+	private static int turno = 0;
 	private Teclado teclado;
-	private Mapa mapaJugador1;
-	private Mapa mapaJugador2;
+	private Jugador jugador1;
+	private Jugador jugador2;
 	private ArrayList<Barco> listaBarcosJugador = new ArrayList<Barco>();
 	private static final int LONGITUD_PORTAVIONES = 5;
 	private static final int LONGITUD_BUQUES = 3;
@@ -23,9 +24,6 @@ public class Juego {
 	
 	public Juego() {
 		this.teclado = new Teclado(); 
-		this.mapaJugador1 = new Mapa();
-		this.mapaJugador2 = new Mapa();
-		
 		generarListaBarcosJugador();
 	}
 	
@@ -85,8 +83,12 @@ public class Juego {
 
 	// Método donde cada jugador colocará sus 10 barcos en su respectivo tablero
 	public void inicializarMapas() {
-		Jugador jugador1 = new Jugador(this.mapaJugador1);
+		this.jugador1 = new Jugador();
 		colocarBarcos(jugador1);
+		this.jugador2 = new Jugador();
+		colocarBarcos(jugador2);
+		jugador1.setMapaOculto(jugador2.getCasillasMapa());
+		jugador2.setMapaOculto(jugador1.getCasillasMapa());
 	}
 
 	// Método que controlará la colocación de los barcos
@@ -117,12 +119,14 @@ public class Juego {
 						// Comprobar que la dirección elegida para situar el barco no se salga del tablero.
 						if(comprobarLimitesTablero(direccion, fila, columna, longitudBarco)) {
 							barcoCorrecto = jugador.colocarBarco(barco, fila, columna, direccion);
+							mensajeBarcoCorrecto(barcoCorrecto);
 						}else {
 							System.out.println("Imposible colocar el barco en esa dirección puesto que se sale del tablero.");
 						}
 						
 					}else { // Si es una lancha simplemente habrá que comprobar si en esa posicion hay un barco
 						barcoCorrecto = jugador.colocarBarco(barco, fila, columna, 0); // direccion = 0 --> valor por defecto si es una lancha
+						mensajeBarcoCorrecto(barcoCorrecto);
 					}
 					
 				}else {
@@ -131,6 +135,14 @@ public class Juego {
 			}while(!barcoCorrecto);
 		}
 		
+	}
+	
+	public void mensajeBarcoCorrecto(boolean barcoCorrecto) {
+		if(!barcoCorrecto) {
+			System.out.println("Ya hay un barco en esta posición o hay alguno alrededor. ");
+		}else {
+			System.out.println("Barco introducido!!");
+		}
 	}
 
 	public boolean comprobarLimitesTablero(int direccion, char fila, int columna, int longitudBarco) {
@@ -165,6 +177,24 @@ public class Juego {
 		}
 
 		return valido;
+	}
+	
+	public boolean compararMapas(char fila, int columna) {
+		boolean tocado = false;
+		int numeroFila = this.jugador1.getMapa().caracterAnumerico(fila);
+				
+		if(turno==0) {
+			if(this.jugador1.getCasillasMapaOculto()[numeroFila][columna].isBarco()) {
+				this.jugador2.getCasillasMapa()[numeroFila][columna].setTocado(true);
+				tocado = true;
+			}else {
+				this.jugador2.getCasillasMapa()[numeroFila][columna].setTocado(false);
+			}
+		}
+		
+		this.jugador1.getMapaOculto().pintarMapaOculto();
+		
+		return tocado;
 	}
     
 }

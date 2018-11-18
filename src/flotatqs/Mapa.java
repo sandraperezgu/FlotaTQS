@@ -38,6 +38,11 @@ public class Mapa {
 	public Casilla[][] getTablero() {
 		return this.mapa;
 	}
+	
+	public void setTablero(Casilla[][] mapa) {
+		this.mapa = mapa;
+	}
+	
 	public boolean anadirBarco(Barco barco, char fila, int columna, int direccion) {
 		
 		int numeroFila = caracterAnumerico(fila);
@@ -46,15 +51,13 @@ public class Mapa {
 		switch(direccion) {
 		// Si es una lancha no necesita saber una direccion
 		case 0:
-			//c = this.mapa[numeroFila][columna-1];
-			 
+						 
 			if(!c.isBarco() && barcosAlrededor(barco, fila, columna, direccion)) {
 				c.setBarco(true);
 				barcoColocado = true;
 			}
 			break;
 		case 1:
-			
 			
 			if(barcosAlrededor(barco, fila, columna, direccion)) {
 				
@@ -64,8 +67,6 @@ public class Mapa {
 					numeroFila = numeroFila-1;
 	            }
 				barcoColocado = true;
-				
-				
 			}
 			break;
 		case 2:
@@ -106,7 +107,7 @@ public class Mapa {
 		}
 
 		pintarMapa();
-
+		
 		return barcoColocado;
 	}
 	
@@ -129,6 +130,28 @@ public class Mapa {
         }
         System.out.println();
     }
+	
+	public void pintarMapaOculto() {
+		char[] letras = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+
+        System.out.println("  1 2 3 4 5 6 7 8");
+
+        for (int i = 0; i < DIMENSION; i++) {
+            System.out.print(letras[i] + " ");
+            for (int j = 0; j < DIMENSION; j++) {
+                Casilla c = this.mapa[i][j];
+                if (c.isTocado()) {
+                    System.out.print("T ");
+                }else if(!c.isTocado()){
+                	System.out.print("O ");
+                }else {
+                    System.out.print("_ ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+	}
 	
 	public boolean barcosAlrededor(Barco barco, char fila, int columna, int direccion) {
 		int numeroFila = caracterAnumerico(fila);
@@ -192,6 +215,10 @@ public class Mapa {
 	public void setTablero(Tablero tab) {
 		this.tablero = tab;
 		this.mapa = generarMapaVacio();
+	}
+	
+	public Casilla[][] getMapa(){
+		return this.mapa;
 	}
 	
 	public boolean comprobarLimiteTablero(int numeroFila, int columna) {
