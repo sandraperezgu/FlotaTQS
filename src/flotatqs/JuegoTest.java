@@ -226,11 +226,15 @@ class JuegoTest {
 	
 	@Test
 	void testCompararMapas() {
+		
 		Juego juego = new Juego();
+		MockTeclado tec = new MockTeclado();
+		juego.setTeclado(tec);
+		juego.iniciarJuego();
 		Mapa mapa = new Mapa();
 		MockTableroOculto mto = new MockTableroOculto();
 		mapa.setTablero(mto);
-		
+
 		boolean iguales = juego.compararMapas('A', 1);
 		assertTrue(iguales);
 		iguales = juego.compararMapas('G', 8);
