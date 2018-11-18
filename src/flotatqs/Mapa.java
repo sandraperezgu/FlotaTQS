@@ -35,10 +35,7 @@ public class Mapa {
 		return this.tablero.generarMapa();
 	}
 	
-	public Casilla[][] getTablero() {
-		return this.mapa;
-	}
-	
+
 	public void setTablero(Casilla[][] mapa) {
 		this.mapa = mapa;
 	}
@@ -106,7 +103,9 @@ public class Mapa {
 			break;
 		}
 
+		// MOCK
 		pintarMapa();
+		System.out.println("Mapa Oculto");
 		
 		return barcoColocado;
 	}
@@ -132,21 +131,25 @@ public class Mapa {
     }
 	
 	public void pintarMapaOculto() {
+		
 		char[] letras = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
 
         System.out.println("  1 2 3 4 5 6 7 8");
-
+        
         for (int i = 0; i < DIMENSION; i++) {
             System.out.print(letras[i] + " ");
             for (int j = 0; j < DIMENSION; j++) {
                 Casilla c = this.mapa[i][j];
-                if (c.isTocado()) {
-                    System.out.print("T ");
-                }else if(!c.isTocado()){
-                	System.out.print("O ");
+                if(c.isTocado()!=null) {
+                	if (c.isTocado()) {
+                		System.out.print("T ");
+	                }else if(!c.isTocado()){
+	                	System.out.print("O ");
+	                }
                 }else {
-                    System.out.print("_ ");
+                	System.out.print("_ ");
                 }
+                
             }
             System.out.println();
         }
@@ -216,10 +219,11 @@ public class Mapa {
 		this.tablero = tab;
 		this.mapa = generarMapaVacio();
 	}
-	
-	public Casilla[][] getMapa(){
+		
+	public Casilla[][] getTablero() {
 		return this.mapa;
 	}
+	
 	
 	public boolean comprobarLimiteTablero(int numeroFila, int columna) {
 		boolean colocarBarco = false;

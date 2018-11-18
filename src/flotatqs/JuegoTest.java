@@ -75,7 +75,7 @@ class JuegoTest {
 		int direccion = juego.pedirDireccion();
 		assertEquals(direccion, 2);
 		direccion = juego.pedirDireccion();
-		assertEquals(direccion, 2);
+		assertEquals(direccion, 1);
 		direccion = juego.pedirDireccion();
 		assertEquals(direccion, 0);
 		direccion = juego.pedirDireccion();
@@ -231,16 +231,13 @@ class JuegoTest {
 		MockTeclado tec = new MockTeclado();
 		juego.setTeclado(tec);
 		juego.iniciarJuego();
-		Mapa mapa = new Mapa();
-		MockTableroOculto mto = new MockTableroOculto();
-		mapa.setTablero(mto);
-
+		
 		boolean iguales = juego.compararMapas('A', 1);
 		assertTrue(iguales);
 		iguales = juego.compararMapas('G', 8);
-		assertFalse(iguales);
+		assertTrue(iguales);
 		iguales = juego.compararMapas('D', 5);
 		assertFalse(iguales);
-		
 	}
+	
 }

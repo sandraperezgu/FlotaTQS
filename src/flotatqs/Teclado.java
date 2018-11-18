@@ -18,4 +18,11 @@ public class Teclado {
         
         return direccion;
     }
+    
+	public String leerPosicionAtaque() {
+		System.out.print("Atacar la posición: ");
+		String posicion = lector.next();
+		
+		return posicion;
+	}
 }

@@ -74,10 +74,13 @@ public class Juego {
     }
 
 	public void iniciarJuego() {
-		System.out.println("Hundir la flota");
-		System.out.println("---------------");
-		
+		System.out.println("-------------------- Hundir la flota ------------------");
+		System.out.println("-------------------------------------------------------");
+
 		inicializarMapas();
+		System.out.println("--------------- Que empiece la batalla! ---------------");
+		System.out.println("-------------------------------------------------------");
+		batalla();
 		
 	}
 
@@ -87,8 +90,11 @@ public class Juego {
 		colocarBarcos(jugador1);
 		this.jugador2 = new Jugador();
 		colocarBarcos(jugador2);
-		jugador1.setMapaOculto(jugador2.getCasillasMapa());
-		jugador2.setMapaOculto(jugador1.getCasillasMapa());
+		
+		// Obtenemos el mapa del jugador 2 y lo guardamos oculto en el jugador 1
+		jugador1.setMapaOculto(jugador2.getMapa());
+		// Obtenemos el mapa del jugador 1 y lo guardamos oculto en el jugador 2
+		jugador2.setMapaOculto(jugador1.getMapa());
 	}
 
 	// Método que controlará la colocación de los barcos
@@ -179,16 +185,43 @@ public class Juego {
 		return valido;
 	}
 	
+	public void batalla() {
+		boolean posicionOk= false;
+		boolean ataqueCorrecto = false;
+		Jugador jugador;
+		do {
+			String posicionAtaque = pedirPosicionAtaque();
+			if (comprobarPosicionCursor(posicionAtaque)) {
+				// Cogemos el primer caracter del string, que es la fila
+				char fila = posicionAtaque.charAt(0);
+				// Cogemos el segundo caracter del string, que es la columna, pasándolo a valor
+				// numérico
+				int columna = Character.getNumericValue(posicionAtaque.charAt(1));
+				ataqueCorrecto = compararMapas(fila, columna);
+				if(ataqueCorrecto) {
+					System.out.println("posicion de ataque correcta");
+				}
+				posicionOk = true;
+			}
+		} while (!posicionOk);
+			
+	}
+	
+	
+	public String pedirPosicionAtaque() {
+		return this.teclado.leerPosicionAtaque();
+	}
+		
 	public boolean compararMapas(char fila, int columna) {
 		boolean tocado = false;
 		int numeroFila = this.jugador1.getMapa().caracterAnumerico(fila);
 				
 		if(turno==0) {
-			if(this.jugador1.getCasillasMapaOculto()[numeroFila][columna].isBarco()) {
-				this.jugador2.getCasillasMapa()[numeroFila][columna].setTocado(true);
+			if(this.jugador1.getCasillasMapaOculto()[numeroFila][columna-1].isBarco()) {
+				this.jugador2.getCasillasMapa()[numeroFila][columna-1].setTocado(true);
 				tocado = true;
 			}else {
-				this.jugador2.getCasillasMapa()[numeroFila][columna].setTocado(false);
+				this.jugador2.getCasillasMapa()[numeroFila][columna-1].setTocado(false);
 			}
 		}
 		

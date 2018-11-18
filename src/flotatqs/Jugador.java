@@ -27,18 +27,18 @@ public class Jugador {
     }
 
     public Casilla[][] getCasillasMapa() {
-    	return this.mapa.getMapa();
+    	return this.mapa.getTablero();
     }
     
 	public boolean colocarBarco(Barco barco, char fila, int columna, int direccion) {
 		return this.mapa.anadirBarco(barco, fila, columna, direccion);
 	}
 	
-	public void setMapaOculto(Casilla[][] oculto) {
-		this.mapaOculto.setTablero(oculto);
+	public void setMapaOculto(Mapa oculto) {
+		this.mapaOculto = oculto;
 	}
 	
 	public Casilla[][] getCasillasMapaOculto() {
-		return this.mapaOculto.getMapa();
+		return this.mapaOculto.getTablero();
 	}
 }

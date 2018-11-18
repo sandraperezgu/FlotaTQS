@@ -2,7 +2,7 @@ package flotatqs;
 
 public class Casilla {
 	private boolean barco;
-	private boolean tocado;
+	private Boolean tocado;
 	private int fila;
 	private int columna;
 	
@@ -16,7 +16,7 @@ public class Casilla {
 		return this.barco;
 	}
 	
-	public boolean isTocado() {
+	public Boolean isTocado() {
 		return this.tocado;
 	}
 	
@@ -24,7 +24,7 @@ public class Casilla {
 		this.barco = barco;
 	}
 	
-	public void setTocado(boolean tocado) {
+	public void setTocado(Boolean tocado) {
 		this.tocado = tocado;
 	}
 }
