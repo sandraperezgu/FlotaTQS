@@ -223,4 +223,20 @@ class JuegoTest {
 		valido = juego.comprobarLimitesTablero(0, 'F', 4, 3);
 		assertFalse(valido);
 	}
+	
+	@Test
+	void testCompararMapas() {
+		Juego juego = new Juego();
+		Mapa mapa = new Mapa();
+		MockTableroOculto mto = new MockTableroOculto();
+		mapa.setTablero(mto);
+		
+		boolean iguales = juego.compararMapas('A', 1);
+		assertTrue(iguales);
+		iguales = juego.compararMapas('G', 8);
+		assertFalse(iguales);
+		iguales = juego.compararMapas('D', 5);
+		assertFalse(iguales);
+		
+	}
 }

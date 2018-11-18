@@ -51,8 +51,6 @@ public class Mapa {
 			if(!c.isBarco() && barcosAlrededor(barco, fila, columna, direccion)) {
 				c.setBarco(true);
 				barcoColocado = true;
-			}else {
-				System.out.println("Ya hay un barco en esta posición. ");
 			}
 			break;
 		case 1:
@@ -63,7 +61,7 @@ public class Mapa {
 				for (int i=0; i < barco.getLongitud(); i++) {
 					c = this.mapa[numeroFila][columna-1];
                     c.setBarco(true);
-					numeroFila = numeroFila+1;
+					numeroFila = numeroFila-1;
 	            }
 				barcoColocado = true;
 				
@@ -76,7 +74,7 @@ public class Mapa {
 				for (int i=0; i < barco.getLongitud(); i++) {
 					c = this.mapa[numeroFila][columna-1];
                     c.setBarco(true);
-					numeroFila = numeroFila-1;
+					numeroFila = numeroFila+1;
 	            }
 				barcoColocado = true;
 				
@@ -88,10 +86,9 @@ public class Mapa {
 				for (int i=0; i < barco.getLongitud(); i++) {
 					c = this.mapa[numeroFila][columna-1];
                     c.setBarco(true);
-					columna = columna-1;
+					columna = columna+1;
 	            }
-				
-				
+				barcoColocado = true;
 			}
 			break;
 		case 4:
@@ -100,16 +97,38 @@ public class Mapa {
 				for (int i=0; i < barco.getLongitud(); i++) {
 					c = this.mapa[numeroFila][columna-1];
                     c.setBarco(true);
-					columna = columna+1;
+					columna = columna-1;
 	            }
 				barcoColocado = true;
 				
 			}
 			break;
 		}
-		
+
+		pintarMapa();
+
 		return barcoColocado;
 	}
+	
+	public void pintarMapa() {
+        char[] letras = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+
+        System.out.println("  1 2 3 4 5 6 7 8");
+
+        for (int i = 0; i < DIMENSION; i++) {
+            System.out.print(letras[i] + " ");
+            for (int j = 0; j < DIMENSION; j++) {
+                Casilla c = this.mapa[i][j];
+                if (c.isBarco()) {
+                    System.out.print("B ");
+                }else {
+                    System.out.print("_ ");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
 	
 	public boolean barcosAlrededor(Barco barco, char fila, int columna, int direccion) {
 		int numeroFila = caracterAnumerico(fila);
@@ -227,5 +246,5 @@ public class Mapa {
 		}
 		return colocarBarco;
 	}
-		
+	
 }
