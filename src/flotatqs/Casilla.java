@@ -5,11 +5,20 @@ public class Casilla {
 	private Boolean tocado;
 	private int fila;
 	private int columna;
+	private Barco objetoBarco;
 	
 	public Casilla(int fila, int columna) {
 		this.barco = false;
 		this.fila = fila;
 		this.columna = columna;
+	}
+	
+	public void setObjetoBarco(Barco b) {
+		this.objetoBarco = b;
+	}
+	
+	public Barco getObjetoBarco() {
+		return this.objetoBarco;
 	}
 	
 	public boolean isBarco() {

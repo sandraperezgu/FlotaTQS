@@ -5,7 +5,7 @@ public class Tablero {
 	private static final int DIMENSION = 8;
 	private Casilla[][] tablero = new Casilla[DIMENSION][DIMENSION];
 	
-	public Casilla[][] generarMapa() {
+	public Casilla[][] generarMapaVacio() {
 		for (int i = 0; i < DIMENSION; i++) {
 			for (int j = 0; j < DIMENSION; j++) {
 				Casilla c = new Casilla(i, j);
@@ -15,4 +15,5 @@ public class Tablero {
 		
 		return this.tablero;
 	}
+	
 }

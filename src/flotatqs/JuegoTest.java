@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 class JuegoTest {
 
-	@Test
+@Test
 	void testComprobarPosicionCursor() {
 		Juego juego = new Juego();
 

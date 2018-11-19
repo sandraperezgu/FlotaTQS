@@ -5,6 +5,8 @@
  */
 package flotatqs;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Sandra
@@ -13,9 +15,28 @@ public class Jugador {
 	
 	private Mapa mapa;
 	private Mapa mapaOculto;
-	
+	private ArrayList<Barco> barcos = new ArrayList<Barco>();
+    private Perfil perfilJugador;
     public Jugador() {
-    	this.mapa = new Mapa();
+    	this.perfilJugador = new Perfil();
+    }
+    
+   
+    public void setPerfilJugador(Perfil p) {
+    	this.perfilJugador = p;
+    }
+
+    public void crearMapa() {
+    	
+    	this.mapa = this.perfilJugador.generarMapaJugador();
+    }
+        
+    public ArrayList<Barco> getBarcos() {
+    	return this.barcos;
+    }
+    
+    public void setBarcos(Barco barco) {
+    	this.barcos.add(barco);
     }
     
     public Mapa getMapa() {
@@ -40,5 +61,23 @@ public class Jugador {
 	
 	public Casilla[][] getCasillasMapaOculto() {
 		return this.mapaOculto.getTablero();
+	}
+
+	// Comprobar si el barco está hundido 
+	public boolean isBarcoHundido(char fila, int columna) {
+		int numeroFila = getMapa().caracterAnumerico(fila);
+		
+		boolean hundido = true;
+		
+
+		Casilla c = this.mapa.getTablero()[numeroFila][columna-1];
+		for(int i = 0; i< c.getObjetoBarco().getCasillas().size();i++) {
+			while(hundido) {
+				if(!c.getObjetoBarco().getCasillas().get(i).isTocado()) {
+					hundido = false;
+				}
+			}
+		}
+		return hundido;
 	}
 }

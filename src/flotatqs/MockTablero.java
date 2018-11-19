@@ -7,7 +7,7 @@ public class MockTablero extends Tablero{
 	
 	// Este método crea un mapa falso con barcos
 	@Override
-	public Casilla[][] generarMapa() {
+	public Casilla[][] generarMapaVacio() {
 		// Añado barcos al mapa
 		Casilla c = new Casilla(5, 1);
 		this.tablero[5][1] = c;

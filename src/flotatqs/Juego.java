@@ -86,9 +86,13 @@ public class Juego {
 
 	// Método donde cada jugador colocará sus 10 barcos en su respectivo tablero
 	public void inicializarMapas() {
+		System.out.println("JUGADOR 1");
 		this.jugador1 = new Jugador();
+		this.jugador1.crearMapa();
 		colocarBarcos(jugador1);
+		System.out.println("JUGADOR 2");
 		this.jugador2 = new Jugador();
+		this.jugador2.crearMapa();
 		colocarBarcos(jugador2);
 		
 		// Obtenemos el mapa del jugador 2 y lo guardamos oculto en el jugador 1
@@ -125,13 +129,16 @@ public class Juego {
 						// Comprobar que la dirección elegida para situar el barco no se salga del tablero.
 						if(comprobarLimitesTablero(direccion, fila, columna, longitudBarco)) {
 							barcoCorrecto = jugador.colocarBarco(barco, fila, columna, direccion);
+							jugador.setBarcos(barco); // añado el barco a la lista de barcos del jugador
 							mensajeBarcoCorrecto(barcoCorrecto);
+							
 						}else {
 							System.out.println("Imposible colocar el barco en esa dirección puesto que se sale del tablero.");
 						}
 						
 					}else { // Si es una lancha simplemente habrá que comprobar si en esa posicion hay un barco
 						barcoCorrecto = jugador.colocarBarco(barco, fila, columna, 0); // direccion = 0 --> valor por defecto si es una lancha
+						jugador.setBarcos(barco); // añado el barco a la lista de barcos del jugador
 						mensajeBarcoCorrecto(barcoCorrecto);
 					}
 					
@@ -188,25 +195,91 @@ public class Juego {
 	public void batalla() {
 		boolean posicionOk= false;
 		boolean ataqueCorrecto = false;
+		boolean barcoHundido = false;
 		Jugador jugador;
-		do {
-			String posicionAtaque = pedirPosicionAtaque();
-			if (comprobarPosicionCursor(posicionAtaque)) {
-				// Cogemos el primer caracter del string, que es la fila
-				char fila = posicionAtaque.charAt(0);
-				// Cogemos el segundo caracter del string, que es la columna, pasándolo a valor
-				// numérico
-				int columna = Character.getNumericValue(posicionAtaque.charAt(1));
-				ataqueCorrecto = compararMapas(fila, columna);
-				if(ataqueCorrecto) {
-					System.out.println("posicion de ataque correcta");
+		
+		if (turno == 0) {
+			jugador = this.jugador1;
+		} else {
+			jugador = this.jugador2;
+		}
+		mostrarTurno();
+		//Si le quedan barcos sin hundir al jugador 
+		if (!jugador.getBarcos().isEmpty()) {
+			// Mostrar los barcos NO hundidos
+			mostrarBarcosSalvados(jugador);
+			
+			// Pedir posición mientras la introducida por el usuario es incorrecta
+			do {
+				// Mostramos el mapa del jugador y el del oponente (oculto)
+				mostrarMapas(jugador);
+				// Pedimos la posición a atacar
+				String posicionAtaque = pedirPosicionAtaque();
+				// Si la posicion es correcta, entonces
+				if (comprobarPosicionCursor(posicionAtaque)) {
+					// Cogemos el primer caracter del string, que es la fila
+					char fila = posicionAtaque.charAt(0);
+					// Cogemos el segundo caracter del string, que es la columna, pasándolo a valor
+					// numérico
+					int columna = Character.getNumericValue(posicionAtaque.charAt(1));
+					// Comparamos la posicion indicada con el mapa real del oponente
+					// para saber si hay parte de un barco
+					ataqueCorrecto = compararMapas(fila, columna);
+					// Si hay parte de un barco, entonces
+					if(ataqueCorrecto) {
+						// Se comprueba si el barco está completamente tocado 
+						// para ser hundido
+						barcoHundido = jugador.isBarcoHundido(fila, columna);
+						// Si debe ser hundido, entonces
+						if(barcoHundido) {
+							System.out.println("Barco hundido");
+							// TODO Eliminar barco de la lista y tachar en el mapa (poner casillas con X al pintar el mapa y pasar barco a hundido (isHundido)
+						}
+					}
+					posicionOk = true;
 				}
-				posicionOk = true;
-			}
-		} while (!posicionOk);
+			} while (!posicionOk);
+			System.out.println("SEGUNDA VEZ");
+			mostrarMapas(jugador);
+		}
+		
 			
 	}
+	public void mostrarMapas(Jugador jugador) {
+		
+		// muestra el mapa del jugador actual con sus barcos (tocados (T), hundidos (H), estables (E))
+		System.out.println("\nMI MAPA");
+		jugador.getMapa().pintarMapa();
+		System.out.println("\nMAPA ENEMIGO");
+		// Mapa oculto que se irá rellenando
+		jugador.getMapaOculto().pintarMapaOculto();
+		
+		
+	}
 	
+	public void mostrarTurno() {
+		if (turno == 0) {
+			System.out.println("Turno jugador 1");
+		} else {
+			System.out.println("Turno jugador 2");
+		}
+	}
+	
+	public void mostrarBarcosSalvados(Jugador jugador) {
+		System.out.println("Barcos a salvo: ");
+
+		for (int i = 0; i < jugador.getBarcos().size(); i++) {
+			if (jugador.getBarcos().get(i).getLongitud() == 5) {
+				System.out.print("\tPortaavion");
+			} else if (jugador.getBarcos().get(i).getLongitud() == 3) {
+				System.out.print("\tBuque");
+			} else {
+				System.out.print("\tLancha");
+			}
+
+		}
+		System.out.println();
+	}
 	
 	public String pedirPosicionAtaque() {
 		return this.teclado.leerPosicionAtaque();
@@ -219,6 +292,7 @@ public class Juego {
 		if(turno==0) {
 			if(this.jugador1.getCasillasMapaOculto()[numeroFila][columna-1].isBarco()) {
 				this.jugador2.getCasillasMapa()[numeroFila][columna-1].setTocado(true);
+		
 				tocado = true;
 			}else {
 				this.jugador2.getCasillasMapa()[numeroFila][columna-1].setTocado(false);

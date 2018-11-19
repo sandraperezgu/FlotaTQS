@@ -27,7 +27,7 @@ class MapaTest {
 	void testGenerarMapaVacio() {
 		Mapa mapa = new Mapa();
 		
-		mapa.generarMapaVacio();
+		mapa.mapaVacio();
 		// Obtengo el tablero creado para comprobar si no hay ningun barco en el mapa
 		Casilla[][] tablero = mapa.getTablero();
 		
@@ -43,7 +43,7 @@ class MapaTest {
 		Mapa mapa = new Mapa();
 		MockTablero tablero = new MockTablero();
 		mapa.setTablero(tablero);
-		
+		mapa.mapaVacio();
 		// LANCHAS
 		boolean barcoColocado = mapa.anadirBarco(new Barco(1), 'G', 2, 0);
 		assertFalse(barcoColocado);
@@ -86,7 +86,7 @@ class MapaTest {
 		Mapa mapa = new Mapa();
 		MockTablero tablero = new MockTablero();
 		mapa.setTablero(tablero);
-		
+		mapa.mapaVacio();
 		// LANCHAS
 		boolean barcoColocado = mapa.barcosAlrededor(new Barco(1), 'C', 2, 0);
 		assertTrue(barcoColocado);
@@ -140,4 +140,37 @@ class MapaTest {
 		assertFalse(barcoColocado);
 		
 	}
+	
+	@Test
+	void testcomprobarLimiteTablero() {
+		
+		Mapa mapa = new Mapa();
+		MockTablero tablero = new MockTablero();
+		mapa.setTablero(tablero);
+		mapa.mapaVacio();
+		boolean barcoColocado = mapa.comprobarLimiteTablero(0,1);
+		assertTrue(barcoColocado);
+		barcoColocado = mapa.comprobarLimiteTablero(7,1);
+		assertTrue(barcoColocado);
+		barcoColocado = mapa.comprobarLimiteTablero(0,8);
+		assertTrue(barcoColocado);
+		barcoColocado = mapa.comprobarLimiteTablero(7,8);
+		assertTrue(barcoColocado);
+		barcoColocado = mapa.comprobarLimiteTablero(0,3);
+		assertFalse(barcoColocado);
+		barcoColocado = mapa.comprobarLimiteTablero(7,5);
+		assertTrue(barcoColocado);
+		barcoColocado = mapa.comprobarLimiteTablero(4,1);
+		assertTrue(barcoColocado);
+		barcoColocado = mapa.comprobarLimiteTablero(3,8);
+		assertTrue(barcoColocado);
+		
+		barcoColocado = mapa.comprobarLimiteTablero(3,4);
+		assertFalse(barcoColocado);
+		barcoColocado = mapa.comprobarLimiteTablero(5,5);
+		assertFalse(barcoColocado);
+		barcoColocado = mapa.comprobarLimiteTablero(6,2);
+		assertFalse(barcoColocado);
+	}
+		
 }
