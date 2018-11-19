@@ -129,7 +129,12 @@ public class Mapa {
 				//if(c.getObjetoBarco().is)
 				if (c.isTocado() != null) {
 					if(c.isTocado()) {
-						System.out.print("T ");
+						if(!c.getObjetoBarco().isHundido()) {
+							System.out.print("T ");
+						}else {
+							System.out.print("X ");
+						}
+						
 					}else {
 						if(c.isBarco()) {
 							System.out.print("B ");

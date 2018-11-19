@@ -4,7 +4,7 @@ public class MockTeclado extends Teclado {
 	// String[] posiciones = { "A1", "B2", "H1", "Z1" };
 	String[] posiciones = { "A1", "B2", "H1", "Z1", "H1", "H3", "A1", "A8", "F3", "B2", "B4", "B5", "F6", "A3", "G8",
 			"A7", "G8", "A1", "H1", "C1", "F2", "A5", "E3", "E5", "A3", "A8" };
-	String[] posicionAtaque = {"B4"};
+	String[] posicionAtaque = {"A1"};
 	int[] direcciones = { 2, 1, 0, 2, 1, 3, 0, 2, 1, 0, 2, 2, 0, 0, 0, 2, 4, 0, 3, 3, 0, 2, 0, 0, 0, 1 };
 	// int[] direcciones = { 2, 2, 0, 2 };
 

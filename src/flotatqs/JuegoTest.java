@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 class JuegoTest {
 
-@Test
+	@Test
 	void testComprobarPosicionCursor() {
 		Juego juego = new Juego();
 
@@ -238,6 +238,14 @@ class JuegoTest {
 		assertTrue(iguales);
 		iguales = juego.compararMapas('D', 5);
 		assertFalse(iguales);
+	}
+	
+	@Test
+	public void testIniciarJuego() {
+		Juego juego = new Juego();
+		MockTeclado tec = new MockTeclado();
+		juego.setTeclado(tec);
+		juego.iniciarJuego();
 	}
 	
 }

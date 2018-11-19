@@ -17,34 +17,12 @@ public class Juego {
 	private Teclado teclado;
 	private Jugador jugador1;
 	private Jugador jugador2;
-	private ArrayList<Barco> listaBarcosJugador = new ArrayList<Barco>();
-	private static final int LONGITUD_PORTAVIONES = 5;
-	private static final int LONGITUD_BUQUES = 3;
 	private static final int LONGITUD_LANCHAS = 1;
 	
 	public Juego() {
 		this.teclado = new Teclado(); 
-		generarListaBarcosJugador();
 	}
 	
-	public void generarListaBarcosJugador() {
-		// 10 barcos en total
-		for (int i = 0; i < 5; i++) {
-			// portaaviones
-			if (i < 2) {
-				this.listaBarcosJugador.add(new Barco(LONGITUD_PORTAVIONES));
-			}
-			// buques
-			if (i < 3) {
-				this.listaBarcosJugador.add(new Barco(LONGITUD_BUQUES));
-			}
-			// lanchas
-			if (i < 5) {
-				this.listaBarcosJugador.add(new Barco(LONGITUD_LANCHAS));
-			}
-		}
-	}
-
 	public void setTeclado(Teclado tec) {
         this.teclado = tec;
     }
@@ -106,11 +84,11 @@ public class Juego {
 		String posicion;
 		
 		// Para cada barco
-		for(int i = 0; i < listaBarcosJugador.size(); i++) {
+		for(int i = 0; i < jugador.getBarcos().size(); i++) {
 			boolean barcoCorrecto = false;
 			do {
 				// Longitud del barco i de la lista de barcos del jugador
-				Barco barco = listaBarcosJugador.get(i);
+				Barco barco = jugador.getBarcos().get(i);
 				int longitudBarco = barco.getLongitud();
 				
 				posicion = pedirPosicion(longitudBarco);
@@ -129,7 +107,7 @@ public class Juego {
 						// Comprobar que la dirección elegida para situar el barco no se salga del tablero.
 						if(comprobarLimitesTablero(direccion, fila, columna, longitudBarco)) {
 							barcoCorrecto = jugador.colocarBarco(barco, fila, columna, direccion);
-							jugador.setBarcos(barco); // añado el barco a la lista de barcos del jugador
+							//jugador.setBarcos(barco); // añado el barco a la lista de barcos del jugador
 							mensajeBarcoCorrecto(barcoCorrecto);
 							
 						}else {
@@ -138,7 +116,7 @@ public class Juego {
 						
 					}else { // Si es una lancha simplemente habrá que comprobar si en esa posicion hay un barco
 						barcoCorrecto = jugador.colocarBarco(barco, fila, columna, 0); // direccion = 0 --> valor por defecto si es una lancha
-						jugador.setBarcos(barco); // añado el barco a la lista de barcos del jugador
+						//jugador.setBarcos(barco); // añado el barco a la lista de barcos del jugador
 						mensajeBarcoCorrecto(barcoCorrecto);
 					}
 					
@@ -197,6 +175,7 @@ public class Juego {
 		boolean ataqueCorrecto = false;
 		boolean barcoHundido = false;
 		Jugador jugador;
+		boolean ganador = false;
 		
 		if (turno == 0) {
 			jugador = this.jugador1;
@@ -232,29 +211,32 @@ public class Juego {
 						barcoHundido = jugador.isBarcoHundido(fila, columna);
 						// Si debe ser hundido, entonces
 						if(barcoHundido) {
+							if(turno==0) {
+								jugador2.hundirBarco(fila, columna);
+							}else {
+								jugador1.hundirBarco(fila, columna);
+							}
 							System.out.println("Barco hundido");
-							// TODO Eliminar barco de la lista y tachar en el mapa (poner casillas con X al pintar el mapa y pasar barco a hundido (isHundido)
 						}
+						
 					}
+					jugador.getMapaOculto().pintarMapaOculto();
 					posicionOk = true;
 				}
 			} while (!posicionOk);
-			System.out.println("SEGUNDA VEZ");
-			mostrarMapas(jugador);
+
 		}
-		
-			
 	}
+
+	
 	public void mostrarMapas(Jugador jugador) {
-		
-		// muestra el mapa del jugador actual con sus barcos (tocados (T), hundidos (H), estables (E))
+		// muestra el mapa del jugador actual con sus barcos (tocados (T), hundidos (H), estables (B))
 		System.out.println("\nMI MAPA");
 		jugador.getMapa().pintarMapa();
+		// muestra el mapa del oponente oculto, destapando las casillas que atacamos segun estén tocadas (T) o con agua (O) 
 		System.out.println("\nMAPA ENEMIGO");
 		// Mapa oculto que se irá rellenando
-		jugador.getMapaOculto().pintarMapaOculto();
-		
-		
+		jugador.getMapaOculto().pintarMapaOculto();		
 	}
 	
 	public void mostrarTurno() {
@@ -299,7 +281,7 @@ public class Juego {
 			}
 		}
 		
-		this.jugador1.getMapaOculto().pintarMapaOculto();
+		//this.jugador1.getMapaOculto().pintarMapaOculto();
 		
 		return tocado;
 	}
