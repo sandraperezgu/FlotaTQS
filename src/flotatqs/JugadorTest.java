@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 class JugadorTest {
-
+	// comprueba si el barco se puede hundir
 	@Test
 	void testIsBarcoHundido() {
 		MockPerfil mp = new MockPerfil();

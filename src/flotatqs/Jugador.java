@@ -90,7 +90,7 @@ public class Jugador {
 
 		boolean hundido = true;
 
-		Casilla c = this.mapa.getTablero()[numeroFila][columna - 1];
+		Casilla c = this.mapaOculto.getTablero()[numeroFila][columna - 1];
 		int i = 0;
 		
 		if(c.getObjetoBarco().getLongitud()!=LONGITUD_LANCHAS) {
@@ -99,8 +99,6 @@ public class Jugador {
 					if (!c.getObjetoBarco().getCasillas().get(i).isTocado()) {
 						hundido = false;
 					}
-				}else {
-					hundido = false;
 				}
 				i++;
 			}

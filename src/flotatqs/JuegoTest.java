@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 class JuegoTest {
 
+	// comprueba que el dato introducido sea correcto
+	// limites y particiones equivalentes del tablero
 	@Test
 	void testComprobarPosicionCursor() {
 		Juego juego = new Juego();
@@ -47,42 +49,8 @@ class JuegoTest {
 		assertFalse(posicion);
 	
 	}
-	
-	@Test
-	void testPedirPosicion() {
-		// Recoge el String que introduce el usuario, independientemente de que sea correcto o no
-		Juego juego = new Juego();
-		MockTeclado teclado = new MockTeclado();
-		juego.setTeclado(teclado);
-		
-		String posicion = juego.pedirPosicion(5);
-		assertEquals(posicion, "A1");
-		posicion = juego.pedirPosicion(3);
-		assertEquals(posicion, "B2");
-		posicion = juego.pedirPosicion(1);
-		assertEquals(posicion, "H1");
-		posicion = juego.pedirPosicion(5);
-		assertEquals(posicion, "Z1");
-	}
-	
-	@Test
-	void testPedirDireccion() {
-		// Recoge el numero que introduce el usuario, independientemente de que sea correcto o no
-		Juego juego = new Juego();
-		MockTeclado teclado = new MockTeclado();
-		juego.setTeclado(teclado);
-		
-		int direccion = juego.pedirDireccion();
-		assertEquals(direccion, 2);
-		direccion = juego.pedirDireccion();
-		assertEquals(direccion, 1);
-		direccion = juego.pedirDireccion();
-		assertEquals(direccion, 0);
-		direccion = juego.pedirDireccion();
-		assertEquals(direccion, 2);
 
-	}
-	
+	// Comprueba limites del tablero
 	@Test
 	void testComprobarLimitesTablero() {
 		Juego juego = new Juego();
@@ -224,28 +192,53 @@ class JuegoTest {
 		assertFalse(valido);
 	}
 	
+	// Test que comprueba si la casilla ha sido tocada o no
 	@Test
 	void testCompararMapas() {
-		
 		Juego juego = new Juego();
-		MockTeclado tec = new MockTeclado();
-		juego.setTeclado(tec);
-		juego.iniciarJuego();
+		MockPartida mp = new MockPartida();
+		MockTeclado mt = new MockTeclado();
+		juego.setPartida(mp);
+		juego.setTeclado(mt);
+		
+		juego.setJugador1();
+		
+		juego.setJugador2();
+		
+		juego.colocarBarcos(juego.getJugador1());
+		//juego.getJugador2().crearMapa();
+		juego.copiarMapaOponente(juego.getJugador1(), juego.getJugador2());
+		juego.copiarMapaOponente(juego.getJugador2(), juego.getJugador1());
 		
 		boolean iguales = juego.compararMapas('A', 1);
 		assertTrue(iguales);
 		iguales = juego.compararMapas('G', 8);
-		assertTrue(iguales);
-		iguales = juego.compararMapas('D', 5);
 		assertFalse(iguales);
+		iguales = juego.compararMapas('D', 5);
+		assertTrue(iguales);
+		
 	}
 	
-	@Test
-	public void testIniciarJuego() {
+	/*@Test
+	public void testComprobarGanador() {
 		Juego juego = new Juego();
-		MockTeclado tec = new MockTeclado();
-		juego.setTeclado(tec);
-		juego.iniciarJuego();
-	}
+		MockPartida mp = new MockPartida();
+		MockTeclado mt = new MockTeclado();
+		juego.setPartida(mp);
+		juego.setTeclado(mt);
+		
+		juego.setJugador1();
+		
+		juego.setJugador2();
+		
+		juego.colocarBarcos(juego.getJugador1());
+		juego.getJugador2().crearMapa();
+		juego.colocarBarcos(juego.getJugador2());
+		juego.copiarMapaOponente(juego.getJugador1(), juego.getJugador2());
+		juego.copiarMapaOponente(juego.getJugador2(), juego.getJugador1());
+		
+		int ganador = juego.comprobarGanador();
+		assertEquals(ganador, 1);
+	}*/
 	
 }

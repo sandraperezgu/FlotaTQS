@@ -15,12 +15,14 @@ public class Juego {
     
 	private static int turno = 0;
 	private Teclado teclado;
+	private Partida partida;
 	private Jugador jugador1;
 	private Jugador jugador2;
 	private static final int LONGITUD_LANCHAS = 1;
 	
 	public Juego() {
 		this.teclado = new Teclado(); 
+		this.partida = new Partida();
 	}
 	
 	public void setTeclado(Teclado tec) {
@@ -54,7 +56,6 @@ public class Juego {
 	public void iniciarJuego() {
 		System.out.println("-------------------- Hundir la flota ------------------");
 		System.out.println("-------------------------------------------------------");
-
 		inicializarMapas();
 		System.out.println("--------------- Que empiece la batalla! ---------------");
 		System.out.println("-------------------------------------------------------");
@@ -62,21 +63,48 @@ public class Juego {
 		
 	}
 
+	public void setPartida(Partida p) {
+		this.partida = p;
+	}
+	
 	// Método donde cada jugador colocará sus 10 barcos en su respectivo tablero
 	public void inicializarMapas() {
 		System.out.println("JUGADOR 1");
-		this.jugador1 = new Jugador();
-		this.jugador1.crearMapa();
+		setJugador1();
+		
 		colocarBarcos(jugador1);
 		System.out.println("JUGADOR 2");
-		this.jugador2 = new Jugador();
-		this.jugador2.crearMapa();
+		
+		setJugador2();
+		
 		colocarBarcos(jugador2);
 		
+		copiarMapaOponente(jugador1, jugador2);
+		copiarMapaOponente(jugador2, jugador1);
 		// Obtenemos el mapa del jugador 2 y lo guardamos oculto en el jugador 1
-		jugador1.setMapaOculto(jugador2.getMapa());
+		//jugador1.setMapaOculto(jugador2.getMapa());
 		// Obtenemos el mapa del jugador 1 y lo guardamos oculto en el jugador 2
-		jugador2.setMapaOculto(jugador1.getMapa());
+		//jugador2.setMapaOculto(jugador1.getMapa());
+	}
+	
+	public void copiarMapaOponente(Jugador jugador1, Jugador jugador2) {
+		this.partida.copiarMapaOponente(jugador1, jugador2);
+	}
+	
+	public Jugador getJugador1() {
+		return this.jugador1;
+	}
+	
+	public Jugador getJugador2() {
+		return this.jugador2;
+	}
+	
+	public void setJugador1() {
+		this.jugador1 = this.partida.setJugador1();
+	}
+	
+	public void setJugador2() {
+		this.jugador2 = this.partida.setJugador2();
 	}
 
 	// Método que controlará la colocación de los barcos
@@ -175,60 +203,85 @@ public class Juego {
 		boolean ataqueCorrecto = false;
 		boolean barcoHundido = false;
 		Jugador jugador;
-		boolean ganador = false;
-		
-		if (turno == 0) {
-			jugador = this.jugador1;
-		} else {
-			jugador = this.jugador2;
-		}
-		mostrarTurno();
-		//Si le quedan barcos sin hundir al jugador 
-		if (!jugador.getBarcos().isEmpty()) {
-			// Mostrar los barcos NO hundidos
-			mostrarBarcosSalvados(jugador);
-			
-			// Pedir posición mientras la introducida por el usuario es incorrecta
-			do {
-				// Mostramos el mapa del jugador y el del oponente (oculto)
-				mostrarMapas(jugador);
-				// Pedimos la posición a atacar
-				String posicionAtaque = pedirPosicionAtaque();
-				// Si la posicion es correcta, entonces
-				if (comprobarPosicionCursor(posicionAtaque)) {
-					// Cogemos el primer caracter del string, que es la fila
-					char fila = posicionAtaque.charAt(0);
-					// Cogemos el segundo caracter del string, que es la columna, pasándolo a valor
-					// numérico
-					int columna = Character.getNumericValue(posicionAtaque.charAt(1));
-					// Comparamos la posicion indicada con el mapa real del oponente
-					// para saber si hay parte de un barco
-					ataqueCorrecto = compararMapas(fila, columna);
-					// Si hay parte de un barco, entonces
-					if(ataqueCorrecto) {
-						// Se comprueba si el barco está completamente tocado 
-						// para ser hundido
-						barcoHundido = jugador.isBarcoHundido(fila, columna);
-						// Si debe ser hundido, entonces
-						if(barcoHundido) {
-							if(turno==0) {
-								jugador2.hundirBarco(fila, columna);
-							}else {
-								jugador1.hundirBarco(fila, columna);
+		int ganador = 0;
+		do{
+			if (turno == 0) {
+				jugador = this.jugador1;
+			} else {
+				jugador = this.jugador2;
+			}
+			mostrarTurno();
+			//Si le quedan barcos sin hundir al jugador 
+			if (!jugador.getBarcos().isEmpty()) {
+				// Mostrar los barcos NO hundidos
+				mostrarBarcosSalvados(jugador);
+				
+				// Pedir posición mientras la introducida por el usuario es incorrecta
+				do {
+					// Mostramos el mapa del jugador y el del oponente (oculto)
+					mostrarMapas(jugador);
+					// Pedimos la posición a atacar
+					String posicionAtaque = pedirPosicionAtaque();
+					// Si la posicion es correcta, entonces
+					if (comprobarPosicionCursor(posicionAtaque)) {
+						// Cogemos el primer caracter del string, que es la fila
+						char fila = posicionAtaque.charAt(0);
+						// Cogemos el segundo caracter del string, que es la columna, pasándolo a valor
+						// numérico
+						int columna = Character.getNumericValue(posicionAtaque.charAt(1));
+						// Comparamos la posicion indicada con el mapa real del oponente
+						// para saber si hay parte de un barco
+						ataqueCorrecto = compararMapas(fila, columna);
+						// Si hay parte de un barco, entonces
+						if(ataqueCorrecto) {
+							// Se comprueba si el barco está completamente tocado 
+							// para ser hundido
+							barcoHundido = jugador.isBarcoHundido(fila, columna);
+							// Si debe ser hundido, entonces
+							if(barcoHundido) {
+								if(turno==0) {
+									jugador2.hundirBarco(fila, columna);
+								}else {
+									jugador1.hundirBarco(fila, columna);
+								}
+								System.out.println("Barco hundido");
+								ganador = comprobarGanador();
 							}
-							System.out.println("Barco hundido");
+							posicionOk = true;
+							
+						}else {
+							//if(posicionOk) {
+								pasarTurno();
+							//}
 						}
-						
+						jugador.getMapaOculto().pintarMapaOculto();						
 					}
-					jugador.getMapaOculto().pintarMapaOculto();
-					posicionOk = true;
-				}
-			} while (!posicionOk);
-
-		}
+				} while (!posicionOk);
+			}
+		}while(ganador==0);
+		
+		
 	}
 
+	public void pasarTurno() {
+		if (turno == 1) {
+			turno = 0;
+		} else {
+			turno++;
+		}
+	}
 	
+	public int comprobarGanador() {
+		int ganador = 0;
+		if(jugador1.getBarcos().isEmpty()) {
+			ganador = 1;
+		}else if(jugador2.getBarcos().isEmpty()){
+			ganador = 2;
+		}
+		
+		return ganador;
+	}
+
 	public void mostrarMapas(Jugador jugador) {
 		// muestra el mapa del jugador actual con sus barcos (tocados (T), hundidos (H), estables (B))
 		System.out.println("\nMI MAPA");
@@ -236,7 +289,7 @@ public class Juego {
 		// muestra el mapa del oponente oculto, destapando las casillas que atacamos segun estén tocadas (T) o con agua (O) 
 		System.out.println("\nMAPA ENEMIGO");
 		// Mapa oculto que se irá rellenando
-		jugador.getMapaOculto().pintarMapaOculto();		
+		jugador.getMapaOculto().pintarMapaOculto();
 	}
 	
 	public void mostrarTurno() {
@@ -278,6 +331,14 @@ public class Juego {
 				tocado = true;
 			}else {
 				this.jugador2.getCasillasMapa()[numeroFila][columna-1].setTocado(false);
+			}
+		}else {
+			if(this.jugador2.getCasillasMapaOculto()[numeroFila][columna-1].isBarco()) {
+				this.jugador1.getCasillasMapa()[numeroFila][columna-1].setTocado(true);
+		
+				tocado = true;
+			}else {
+				this.jugador1.getCasillasMapa()[numeroFila][columna-1].setTocado(false);
 			}
 		}
 		
